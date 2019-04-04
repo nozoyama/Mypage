@@ -1,0 +1,327 @@
+@charset "utf-8";
+
+/* =======================================
+
+	CommonElements
+
+======================================= */
+*,
+* :before,
+*:after { box-sizing: border-box; }
+  
+body {
+  position: relative;
+  overflow: hidden;
+  
+  background: #C2B8B2 ;
+}
+
+
+/*-----------------------------
+#container
+--------------------------- */
+#container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+}
+
+/*----------------------------- 
+.stageBase
+--------------------------- */
+.stageBase {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 atuo;
+  
+}
+
+/*----------------------------- 
+　それぞれの.stage
+--------------------------- */
+.p-home{
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%; 
+}
+.p-inner{
+  width: 100%; height: 100%;
+  text-align: center; 
+}
+@media screen and (max-width:765px ){
+  .p-inner{
+    width: 100%; height: 70%;
+    text-align: center; 
+  }
+}
+.p-text{
+  position: absolute;
+  bottom: 14%;
+  color:#414141;
+  text-align: center;
+  width:100%;
+}
+.p-txt{ width: 60%; margin: 0 auto; padding-right: 4%;}
+.p-text h1{font-size: 2rem;}
+.p-text p{font-size: 20px;}
+/*----------------------------- 
+      #pageNav
+----------------------------- */
+#pageNav {
+  top: 10%; 
+  left: 3%;
+  width: 30px;
+  text-align: center;
+  position: fixed;
+  z-index: 2;
+}
+#pageNav ul {
+  width: 30px;
+  display: block;
+}
+#pageNav ul li {
+  margin-bottom: 10px;
+  width: 30px;
+  height: 30px;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+#pageNav ul li a{
+  width: 30px;
+  height: 30px;
+  background: #918879;
+  display: block;
+}
+
+#pageNav ul li.activeStage a {
+  background: #dfe5db;
+}
+
+/*-----------------------------
+ #pageDown
+--------------------------- */
+#pageDown {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  position: fixed;
+  overflow: hidden;
+  z-index: 3;
+}
+#pageDown a {
+  margin: 0 auto;
+  width: 30px;
+  height: 30px;
+  background: transparent url(../images/next_arw.png) no-repeat center center;
+  display: block;
+}
+
+
+/*-----------------------------
+            book 
+-----------------------------*/
+.book{
+  transition: opacity 0.4s 0.2s;
+}
+.page {
+  /* color: transparent; */
+  background: left top no-repeat;
+  background-size: cover;
+}
+
+.portofolio, .design { transition: opacity 0.4s 0.2s; }
+
+.page:first-child { float: right; }
+.page:nth-child(even) { clear: both; }
+.bound { 
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5em 0;
+  line-height: 1.5em; 
+  perspective: 250vw; 
+}
+.page {
+  width: 40vw;
+  height: 500px;
+  background-color:#C2B8B2 ;
+  float: left;
+  margin-bottom: 0.5em;
+}
+.bound .pages {
+  width: 80vw;
+  height: 500px;
+  position: relative;
+  transform: rotateX(12deg);  /*本を少し傾けて浮かす*/
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+.bound .page {
+  float: none;
+  clear: none;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  /* width: 40vw;
+  height: 30vw; */
+  transform-origin: 0 0;
+  transition: transform 1.4s;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  user-select: none;
+}
+/* .bound .page:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.7s;
+  z-index: 2;
+} */
+/* odd(右ページ) */
+.bound .page:nth-child(odd) {
+  pointer-events: all;
+  transform: rotateY(0deg);
+  right: 0;
+  border-radius: 0 4px 4px 0;
+}
+.bound .page:nth-child(odd):hover { transform: rotateY(-10deg); }
+.bound .page:nth-child(odd):hover:before { background: rgba(0, 0, 0, 0.03); }
+/* .bound .page:nth-child(odd):before { background: rgba(0, 0, 0, 0); } */
+/* even (左のページ) */
+.bound .page:nth-child(even) { 
+  pointer-events: none;
+  transform: rotateY(180deg);
+  transform-origin: 100% 0;
+  left: 0;
+  border-radius: 4px 0 0 4px;
+}
+/* .bound .page:nth-child(even):before { background: rgba(0, 0, 0, 0.2); } */
+.bound .page.grabbing { transition: none; }
+.bound .page.flipped:nth-child(odd) {
+  pointer-events: none;
+  transform: rotateY(-180deg);
+}
+/* .bound .page.flipped:nth-child(odd):before { background: rgba(0, 0, 0, 0.2); } */
+.bound .page.flipped:nth-child(even) {
+  pointer-events: all;
+  transform: rotateY(0deg);
+}
+.bound .page.flipped:nth-child(even):hover { transform: rotateY(10deg); }
+.bound .page.flipped:nth-child(even):hover:before { background: rgba(0, 0, 0, 0.03); }
+/* .bound .page.flipped:nth-child(even):before { background: rgba(0, 0, 0, 0); } */
+
+/*-----------------------------
+  each page
+-----------------------------*/
+.page:nth-child(3),
+.page:nth-child(5),
+.page:nth-child(7),
+.page:nth-child(9),
+.page:nth-child(11),
+.page:nth-child(13),
+.page:nth-child(15),
+.page:nth-child(17),
+.page:nth-child(19),
+.page:nth-child(21),
+.page:nth-child(23),
+.page:nth-child(25),
+.page:nth-child(27),
+.page:nth-child(29),
+.page:nth-child(31) {
+  background-position: top right;
+}
+
+.page:nth-child(1) {
+  border: 5px dashed #ddd;
+  text-align: center;
+  margin:0 auto;
+}
+.page:nth-child(1) p{
+  font-size: 20px;
+  margin-top: 20px;
+}
+.page:nth-child(2){
+  background: #000;
+}
+.page:nth-child(3) {
+  background: #fff;
+}
+.page:nth-child(4){
+  background: #000fff;
+}
+.page:nth-child(5) {
+  background: #fff000;
+}
+.page:nth-child(6){
+  background: #999;
+}
+.page:nth-child(7) {
+}
+.page:nth-child(8){
+}
+.page:nth-child(9) {
+}
+.page:nth-child(10),
+.page:nth-child(11) {
+  background-image: url();
+}
+.page:nth-child(12),
+.page:nth-child(13) {
+  background-image: url();
+}
+.page:nth-child(14),
+.page:nth-child(15) {
+  background-image: url();
+}
+.page:nth-child(16),
+.page:nth-child(17) {
+  background-image: url();
+}
+.page:nth-child(18),
+.page:nth-child(19) {
+  background-image: url();
+}
+.page:nth-child(20),
+.page:nth-child(21) {
+  background-image: url();
+}
+.page:nth-child(22),
+.page:nth-child(23) {
+  background-image: url();
+}
+.page:nth-child(24),
+.page:nth-child(25) {
+  background-image: url();
+}
+.page:nth-child(26),
+.page:nth-child(27) {
+  background-image: url();
+}
+.page:nth-child(28),
+.page:nth-child(29) {
+  background-image: url();
+}
+.page:nth-child(30),
+.page:nth-child(31) {
+  background-image: url();
+}
+.page:nth-child(32) {
+  background-image: url();
+}
+
